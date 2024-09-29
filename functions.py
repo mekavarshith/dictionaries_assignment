@@ -1,19 +1,37 @@
 # Functionality for manager to update the menu items
 def update_menu_item(menu, code, field, new_value):
-    pass
+    for item in menu:
+        if item['code'] == code:
+            if field == 'name':
+                item['name'] = new_value
+            elif field == 'price':
+                item['price'] = int(new_value)
+            print(f"{code} updated: {field} changed to {new_value}")
+            return True
+    print(f"Item {code} not found.")
+    return False
+
 
 def add_menu_item(menu, code, name, price, stock):
-    pass
+    new_item = {"code": code, "name": name, "price": int(price), "stock": int(stock)}
+    menu.append(new_item)
+    print(f"Added new item: {new_item}")
+
+
 
 def remove_menu_item(menu, code):
-    pass
+    for item in menu:
+        if item['code'] == code:
+            menu.remove(item)
+            print(f"Removed item: {code}")
+            return True
+    print(f"Item {code} not found.")
+    return False
+
 
 # Functionality to handle customer requests and verify stock availability
 def process_customer_request(menu, request_code, quantity):
-    """
-    Processes a customer request by checking if the item is available
-    and if the requested quantity is in stock.
-    """
+
     quantity = int(quantity)
     for item in menu:
         if item['code'] == request_code:
@@ -29,8 +47,6 @@ def process_customer_request(menu, request_code, quantity):
 
 # Display the menu items
 def display_menu(menu):
-    """
-    Displays the current menu with prices and stock levels.
-    """
+
     for item in menu:
         print(f"{item['code']} - {item['name']} - ${item['price']} (Stock: {item['stock']})")
